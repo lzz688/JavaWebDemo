@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>用户登录</title>
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.js"></script>
-    <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
+    <script type="text/javascript" src="bootstrap-4.4.1-dist/js/bootstrap.js"></script>
+    <link type="text/css" rel="stylesheet" href="bootstrap-4.4.1-dist/css/bootstrap.css">
 </head>
 <style>
     body{
@@ -60,7 +60,7 @@
                 <h4 style="margin-top:15px;margin-left: 200px">注册</h4>
             </div>
             <div class="modal-body">
-                <form action="/register">
+                <form id="registerinfo" action="">
                     <div class="form-group" style="margin-left: 30px">
                         <div id="information" style="margin-left: 50px;margin-top: 15px">
                             <div>
@@ -93,10 +93,25 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button id="regist" type="button" class="btn btn-primary" style="margin-left: 20px">注册</button>
+                <button id="regist" type="submit" class="btn btn-primary" style="margin-left: 20px" onclick="register()">注册</button>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function register() {
+        var data=$('#registerinfo').serialize();
+        var submitData=decodeURIComponent(data,true);
+        $.ajax({
+            url: '/register',
+            cache: false,
+            async: true,
+            data: submitData,
+            success: function (data) {
+                alert("ok");
+            }
+        });
+    }
+</script>
 </body>
 </html>
