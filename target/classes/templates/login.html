@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
+</head>
+<style>
+    body{
+        background-image: url("image/stardust.png");
+        background-size: 100% 100%;
+        background-attachment: fixed;
+    }
+    .login{
+        width: 400px;
+        height: 300px;
+        margin-left: 680px;
+        margin-top: 20px;
+        /*box-shadow: 2px 2px 5px #bbb;*/
+        position: fixed;
+        background: rgba(255, 255, 255, .2);
+    }
+    #login{
+        width: 150px;
+        height: 50px;
+        margin-top: 10px;
+    }
+    #register{
+        width: 150px;
+        height: 50px;
+        margin-top: 10px;
+    }
+    #regist{
+        width: 450px;
+        height: 50px;
+        margin-top: 10px;
+    }
+</style>
+<body>
+<p class="font-weight-bold" style="margin-left: 715px;margin-top: 150px;font-size: 40px">社区体温监控系统</p>
+<form action="/index">
+    <div class="form-group login">
+        <h4 style="margin-top:15px;margin-left: 170px">登录</h4>
+        <div id="info" style="margin-left: 50px;margin-top: 15px">
+        <label for="exampleInputusername1">用户名</label>
+        <input type="text" class="form-control" id="exampleInputusername1" name="exampleInputusername1" style="width: 305px;height: 40px" placeholder="请输入用户名" autocomplete="off">
+        <label for="exampleInputPassword1">密码</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" name="exampleInputPassword1" style="width: 305px;height: 40px" placeholder="请输入密码" autocomplete="off">
+        <button id="login" type="submit" class="btn btn-primary">登录</button>
+        <button id="register" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">注册</button>
+        </div>
+    </div>
+</form>
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 style="margin-top:15px;margin-left: 200px">注册</h4>
+            </div>
+            <div class="modal-body">
+                <form action="/register">
+                    <div class="form-group" style="margin-left: 30px">
+                        <div id="information" style="margin-left: 50px;margin-top: 15px">
+                            <div>
+                                <label for="exampleInputusername2" style="font-size: 20px;"><strong>用户名</strong></label>
+                                <input type="text" class="form-control" id="exampleInputusername2" name="exampleInputusername2" style="width: 305px;height: 40px" placeholder="请输入用户名" autocomplete="off">
+                            </div>
+                            <div>
+                                <label for="exampleInputPassword2" style="font-size: 20px;"><strong>密码</strong></label>
+                                <input type="password" class="form-control" id="exampleInputPassword2" name="exampleInputPassword2" style="width: 305px;height: 40px" placeholder="请输入密码" autocomplete="off">
+                            </div>
+                            <div>
+                                <label for="exampleInputuserage2" style="font-size: 20px;"><strong>年龄</strong></label>
+                                <input type="text" class="form-control" id="exampleInputuserage2" name="exampleInputuserage2" style="width: 305px;height: 40px" placeholder="请输入年龄" autocomplete="off">
+                            </div>
+                            <div>
+                            <label for="exampleInputusername2"style="font-size: 20px;"><strong>性别</strong></label>
+                                <label><input type="radio" name="sex" style="width: 30px">男</label>
+                                <label><input type="radio" name="sex" style="width: 30px">女</label>
+                            </div>
+                            <div>
+                                <label for="exampleInputtelephone2" style="font-size: 20px;"><strong>联系方式</strong></label>
+                                <input type="text" class="form-control" id="exampleInputtelephone2" name="exampleInputtelephone2" style="width: 305px;height: 40px" placeholder="请输入联系方式" autocomplete="off">
+                            </div>
+                            <div>
+                                <label for="exampleInputaddress2" style="font-size: 20px;"><strong>地址</strong></label>
+                                <input type="text" class="form-control" id="exampleInputaddress2" name="exampleInputaddress2" style="width: 305px;height: 40px" placeholder="请输入地址" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="regist" type="button" class="btn btn-primary" style="margin-left: 20px">注册</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

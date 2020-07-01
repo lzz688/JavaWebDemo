@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>工作日志</title>
+    <link type="text/css" rel="stylesheet" href="layui/css/layui.css">
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="layui/layui.js"></script>
+</head>
+<body style="background-color: #F6F6F6">
+<script type="text/javascript">
+    layui.use(['layer','form'], function() {
+        var layer = layui.layer;
+        var table = layui.table;
+        var form = layui.form;
+        form.render();
+        form.on('submit(save)', function(data){
+            var datainfo =$('#worktext').serialize();//获取form表单数据
+            $.ajax({
+                type:'post',
+                url:'worktextin',
+                data: datainfo,
+                success: function (res) {
+                    layer.open({
+                        title: "提交结果",
+                        content: res,
+                        btn: ['确认'],
+                        yes: function (index, layero) {
+                            layer.closeAll();
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
+<span style="font-size: 20px;font-style: normal;color: black;margin-left: 5px;margin-top: 5px">工作总结</span>
+<hr align=center width=100% color=black size="1" style="height: 3px;color: black">
+<div style="margin-top: 20px;margin-left: 20px;">
+    <form id="worktext" class="layui-form" action="">
+        <div class="layui-form-item">
+            <div class="layui-form-label" style="font-size:17px;width: 100px">工号</div>
+            <label>
+                <input id="anumber" type="text" name="anumber" class="layui-input" autocomplete="off" style="width: 200px;height: 35px;margin-top: 4px" placeholder="请输入工号"/>
+            </label>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-form-label" style="font-size:17px;width: 100px">姓名</div>
+            <label>
+                <input id="bname" type="text" name="bname" class="layui-input" autocomplete="off" style="width: 200px;height: 35px;margin-top: 4px" placeholder="请输入姓名"/>
+            </label>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="font-size:17px;width: 100px">今日完成的工作</label>
+            <div class="layui-input-block">
+                <textarea id="wancheng" name="wancheng" required lay-verify="required" placeholder="请输入内容" class="layui-textarea" style="width: 400px;height: 100px;"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="font-size:17px;width: 100px">需协调工作</label>
+            <div class="layui-input-block">
+                <textarea id="xietiao" name="xietiao" required lay-verify="required" placeholder="请输入内容" class="layui-textarea" style="width: 400px;height: 100px;"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+<button id="tijiao" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="save" style="width: 300px;height: 35px;margin-left: 150px;margin-top: 5px;">提交</button>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>历史消息</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link type="text/css" rel="stylesheet" href="css/layui.css">
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/layui.js"></script>
+</head>
+<body style="background-color: #F2F2F2">
+<div style="margin-top: 10px">
+    <span style="font-size: 20px;color: black;font-style: normal;margin-left: 10px;">历史消息</span></div>
+<hr align=center width=100% color=black size="1" style="height: 3px;color: black">
+<div style="margin-left: 20px;margin-top: 20px;">
+    <ul id="timetable" class="layui-timeline">
+    </ul>
+</div>
+<script>
+    $(function () {
+        $.ajax({
+            type: "post",
+            url: "ggaocontent",
+            success: function (data){
+                for (var i = 0 ; i < data.length; i++){
+                    var elementById = document.getElementById("timetable");
+                    var li = document.createElement("li");
+                    li.innerHTML = "<li class=\"layui-timeline-item\">" + "<div class=\"layui-timeline-content layui-text\">" + "<i class=\"layui-icon layui-timeline-axis\">&#xe63f;</i>" +
+                        "<h3 class=\"layui-timeline-title\">" + timestampToTime(data[i]['riqi']) + "</h3>" + "<p>" + data[i]['content'] + "</p>" + "</div></li>";
+                    elementById.appendChild(li);
+                }
+            }
+        });
+        layui.use('element', function(){
+            var element = layui.element;
+        });
+        function timestampToTime(timestamp) {
+            var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+            var D = (date.getDate() < 10 ? '0'+date.getDate() : date.getDate()) + ' ';
+            var h = (date.getHours() < 10 ? '0'+date.getHours() : date.getHours()) + ':';
+            var m = (date.getMinutes() < 10 ? '0'+date.getMinutes() : date.getMinutes()) + ':';
+            var s = (date.getSeconds() < 10 ? '0'+date.getSeconds() : date.getSeconds());
+            let strDate = Y+M+D+h+m+s;
+            return strDate;
+        }
+    })
+</script>
+</body>
+</html>

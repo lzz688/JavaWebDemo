@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>主菜单页面</title>
+    <link rel="stylesheet" href="css/layui.css">
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/layui.js"></script>
+</head>
+<style>
+    .layui-bg-black{
+        width: 200px;
+    }
+    .layui-nav-tree {
+        width: 200px;
+        height: 100%;
+    }
+    .layui-nav * {
+        position: relative;
+        font-size: 16px;
+    }
+    .layui-nav {
+        border-radius: 0px;
+    }
+    .layui-body{
+        top: 60px;
+        left: 200px;
+    }
+    .layui-layout-admin .layui-header {
+        background-color: #23262E;
+    }
+    .layui-header {
+        z-index: 1000;
+        height: 60px;
+    }
+    .layui-edge, .layui-header, .layui-inline, .layui-main {
+        position: relative;
+    }
+    .layui-side{
+        top: 60px;
+    }
+</style>
+<body>
+<script>
+    layui.use('element', function() {
+        var element = layui.element;
+    });
+    $(function () {
+        //监听li的点击时间实现导航栏的展开和收缩
+        $("span").on("click",function () {
+            var classinfo =$(this).parent().parent().attr('class');
+            if (classinfo == "layui-nav-item layui-nav-itemed"){
+                $($(this).parent().parent()).attr('class',"layui-nav-item");
+            }else{
+                $($(this).parent().parent()).attr('class',"layui-nav-item layui-nav-itemed");
+            }
+            debugger;
+        });
+        //监听a标签的点击事件并将a标签的href取出赋值给iframe
+        $("a").on('click',function () {
+            var address = $(this).attr("href");
+            $("iframe").attr("src",address);
+        })
+    })
+
+</script>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">社区体温监控系统</div>
+    </div>
+</div>
+<div id="main_left" class="layui-side layui-bg-black">
+    <div class="layui-side-scroll">
+        <ul id="menu" class="layui-nav layui-nav-tree layui-inline">
+            <li id="zonghe" class="layui-nav-item layui-nav-itemed">
+                <a href="javascript:;">公共功能
+                    <span class="layui-nav-more"></span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="" target="info">综合信息</a></dd>
+<!--                    <dd><a href="documentmanager.jsp" target="info">文件管理</a></dd>-->
+                    <dd><a href="Ditu" target="info">地图</a></dd>
+                </dl>
+            </li>
+            <li id="yuangong" class="layui-nav-item">
+                <a href="javascript:;">员工管理
+                    <span class="layui-nav-more"></span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="Leavepage" target="info">我要请假</a></dd>
+                    <dd><a href="worktext" target="info">工作日志</a></dd>
+                    <dd><a href="History" target="info">历史公告</a></dd>
+                </dl>
+            </li>
+            <li id="zhineng" class="layui-nav-item">
+                <a href="javascript:;">职能管理
+                    <span class="layui-nav-more"></span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="managerinfo" target="info">员工档案</a></dd>
+                    <dd><a href="Leavemanage" target="info">请假管理</a></dd>
+                    <dd><a href="worktextmanager" target="info">日志管理</a></dd>
+                    <dd><a href="announcement" target="info">公告发布</a></dd>
+                    <dd><a href="History" target="info">历史公告</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="main_right" class="layui-body">
+    <iframe id="info" name="info" style="width: 100%;height: 100%;" src="" frameborder="0" scrolling="yes"></iframe>
+</div>
+</body>
+</html>

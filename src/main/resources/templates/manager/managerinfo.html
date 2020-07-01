@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>员工档案</title>
+    <link type="text/css" rel="stylesheet" href="layui/css/layui.css">
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <style>
+        .layui-table, .layui-table-view {
+            margin: 1px 0;
+        }
+        .layui-table-cell .layui-form-checkbox[lay-skin=primary] {
+            top: 6px;
+            padding: 0px;
+        }
+    </style>
+</head>
+<body style="background-color: #F2F2F2">
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type: 'post',
+            url: 'querymanager',
+            success: function (data) {
+                console.log(data);
+                var temp = {
+                    "code":data['code'],
+                    "msg":"",
+                    "count":data['count'],
+                    "data":data['data']
+                };
+                var res = [];
+                res.push(temp);
+                console.log(res);
+                layui.use('table', function(){
+                    var table = layui.table;
+                    table.render({
+                        elem: '#managerinfo',
+                        height: 410,
+                        url: 'querymanager',
+                        page: true,
+                        parseData: function (temp){
+                            console.log(temp);
+                            return{
+                                "code": temp['code'],
+                                "msg": temp['msg'],
+                                "count":temp['count'],
+                                "data":temp['data']
+                            }
+                        },
+                        data: temp,
+                        cols: [
+                            [
+                            {type: 'checkbox'},
+                            {field: 'id', title: 'ID', width:100,hide:true},
+                            {field: 'anumber', title: '工号', width:100}
+                            ,{field: 'bname', title: '姓名', width:100}
+                            ,{field: 'cpart', title: '部门号', width:100}
+                            ,{field: 'dsex', title: '性别', width:100}
+                            ,{field: 'eprovince', title: '省份', width: 100}
+                            ,{field: 'fcity', title: '城市', width: 100}
+                            ,{field: 'gtelephone', title: '联系方式', width: 150}
+                            ,{field: 'hpersonnumber', title: '身份证号'}
+                            ,{field: 'itime', title: '创建日期'}
+                            ]
+                        ]
+                    });
+                });
+            }
+        });
+    });
+    function xinzeng() {
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            var table = layui.table;
+            var xinzeng = layer.open({
+                type:2,
+                title: '新增员工',
+                content: "addmanager.jsp",
+                area: ['410px','500px'],
+                end: function () {
+                    table.reload('managerinfo', {
+                        url: 'querymanager',
+                    });
+                }
+            });
+        });
+    }
+    function xiugai() {
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            var table = layui.table;
+            var checkStatus = table.checkStatus('managerinfo');
+            console.log(checkStatus['data'][0]['id']);
+            if (checkStatus['data'].length==0){
+                layer.open({
+                    content: '请选择一条信息',
+                });
+            }
+            sessionStorage.setItem("id",checkStatus['data'][0]['id']);
+            var xiugai = layer.open({
+                type:2,
+                title: '修改员工',
+                content: "updatemanager.jsp",
+                area: ['410px','550px'],
+                end: function () {
+                    table.reload('managerinfo', {
+                        url: 'querymanager',
+                    });
+                }
+            });
+        });
+    }
+    function shanchu() {
+        layui.use('layer', function() {
+            var table = layui.table;
+            var checkStatus = table.checkStatus('managerinfo');//获取数据表格当前行数据
+            $.ajax({
+                type: 'post',
+                url: 'deletemanager?id='+checkStatus['data'][0]['anumber'],
+                success: function (data) {
+                    layui.use('layer', function() {
+                        var layer = layui.layer;
+                        layer.open({
+                            title: '删除员工',
+                            content: data,
+                            btn:['确认'],
+                            yes: function(){
+                                layer.closeAll();
+                            },
+                            end: function () {
+                                table.reload('managerinfo', {
+                                    url: 'querymanager',
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    }
+</script>
+<span style="font-size: 20px;font-style: normal;color: black;margin-left: 5px;margin-top: 5px">员工信息</span>
+<hr align=center width=100% color=black size="1" style="height: 3px;color: black">
+<button class="layui-btn layui-btn-normal" style="width: 70px;height: 35px;margin-left: 10px" onclick="xinzeng()">新增</button>
+<button class="layui-btn layui-btn-normal" style="width: 70px;height: 35px" onclick="xiugai()">修改</button>
+<button class="layui-btn layui-btn-normal" style="width: 70px;height: 35px" onclick="shanchu()">删除</button>
+<hr align=center width=100% color=black size="1" style="height: 3px;color: black">
+<table id="managerinfo" lay-filter="test"></table>
+</body>
+</html>

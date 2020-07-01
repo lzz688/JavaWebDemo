@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    active: mybatis
+  thymeleaf:
+    cache: false
+  mvc:
+    view:
+      suffix:
+      prefix: .html
+

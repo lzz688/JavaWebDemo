@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>日志详情</title>
+    <link type="text/css" rel="stylesheet" href="layui/css/layui.css">
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="layui/layui.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+    $(function () {
+        var item = sessionStorage.getItem("sid");
+        $.ajax({
+            type: 'post',
+            url: 'queryworktextdata?id='+item,
+            success: function (data) {
+                console.log(data);
+                debugger;
+                $('#id').val(data[0]['id']);
+                $('#cwancheng').val(data[0]['cwancheng']);
+                $('#dxietiao').val(data[0]['dxietiao']);
+            }
+        });
+    });
+</script>
+<form class="layui-form" action="">
+    <div class="layui-form-item" style="margin-top: 30px;display: none">
+        <label class="layui-form-label" style="font-size:17px;width: 100px">ID</label>
+        <div class="layui-input-block">
+            <textarea id="id" type="text" name="id" class="layui-input" autocomplete="off" style="width:400px;height: 80px;margin-top: 4px;font-size: 17px" ></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top: 30px">
+        <label class="layui-form-label" style="font-size:17px;width: 100px">已完成工作</label>
+        <div class="layui-input-block">
+            <textarea id="cwancheng" type="text" name="cwancheng" class="layui-input" autocomplete="off" style="width:400px;height: 80px;margin-top: 4px;font-size: 17px" ></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top: 20px">
+        <label class="layui-form-label" style="font-size:17px;width: 100px">需协调工作</label>
+        <div class="layui-input-block">
+            <textarea id="dxietiao" type="text" name="dxietiao" class="layui-input" autocomplete="off" style="width: 400px;height: 80px;margin-top: 4px" ></textarea>
+        </div>
+    </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+       "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzz.Dao.InfoMapper">
+
+    <select id="getgginfo" resultType="com.lzz.model.Gonggao">
+        select * from gonggao_table order by riqi desc;
+    </select>
+
+    <insert id="insertinfo" parameterType="com.lzz.model.Gonggao">
+        insert into gonggao_table(id,riqi,content) value (UUID(),now(),#{info})
+    </insert>
+
+    <select id="getmanagerinfo" resultType="com.lzz.model.Manager">
+        select id,number as anumber,
+        name as bname,
+        part as cpart,
+        sex as dsex,
+        province as eprovince,
+        city as fcity,
+        telephone as gtelephone,
+        personnumber as hpersonnumber,
+        DATE_FORMAT(time,'%Y-%m-%d %H:%i:%s') as itime
+        from managerinfo order by itime desc ;
+    </select>
+
+    <select id="getSimplemanagerinfo" resultType="com.lzz.model.Manager">
+        select id,number as anumber,
+        name as bname,
+        part as cpart,
+        sex as dsex,
+        province as eprovince,
+        city as fcity,
+        telephone as gtelephone,
+        personnumber as hpersonnumber,
+        DATE_FORMAT(time,'%Y-%m-%d %H:%i:%s') as itime
+        from managerinfo where id = #{id} ;
+    </select>
+
+    <insert id="insertmanagerinfo" parameterType="com.lzz.model.Manager">
+        insert into managerinfo(id,number,name,part,sex,province,city,telephone,personnumber,time)
+        value
+        (UUID(),#{number},#{name},#{part},#{sex},#{province},#{city},#{telephone},#{personnumber},NOW())
+    </insert>
+
+    <update id="updatemanagerinfo" parameterType="com.lzz.model.Manager">
+        update managerinfo set
+        number =#{number},
+        name =#{name},
+        part =#{part},
+        sex =#{sex},
+        province =#{province},
+        city =#{city},
+        telephone =#{telephone},
+        personnumber =#{personnumber}
+        where id = #{id}
+    </update>
+
+    <delete id="deletemanagerindo" parameterType="String">
+        delete from managerinfo where number = #{number}
+    </delete>
+
+    <insert id="insertholiday" parameterType="com.lzz.model.Holiday">
+        insert into qingjia_table (id,number,name,starttime,endtime,type,reason)
+        value
+        (UUID(),#{number},#{name},#{stime},#{ztime},#{type},#{reason})
+    </insert>
+
+    <select id="queryholiday" resultType="com.lzz.model.Holiday">
+        select id, number as anumber,
+        name as bname,
+        DATE_FORMAT(starttime,'%Y-%m-%d %H:%i:%s') as cstime,
+        DATE_FORMAT(endtime,'%Y-%m-%d %H:%i:%s') as detime,
+        type as etype,
+        reason as freason
+        from qingjia_table order by cstime desc
+    </select>
+
+    <update id="insertresultholiday" parameterType="com.lzz.model.Holiday">
+        update qingjia_table set
+        result=#{result},
+        resultreason=#{resultreason}
+        where id = #{id}
+    </update>
+
+    <select id="queryapproveresult" resultType="com.lzz.model.Holiday">
+        select id,
+        result as gresult,
+        resultreason as freason
+        from qingjia_table where id = #{id}
+    </select>
+
+    <insert id="insertworktext" parameterType="com.lzz.model.worktext">
+        insert into worktext_table
+        (id,number,name,wanchengwork,xietiaowork,state,time)
+        value
+        (UUID(),#{number},#{name},#{wanchengwork},#{xietiaowork},'0',NOW())
+    </insert>
+
+    <select id="queryworktext" resultType="com.lzz.model.worktext">
+        select id,
+        number as anumber,
+        name as bname,
+        wanchengwork as cwancheng,
+        xietiaowork as dxietiao,
+        state as estate,
+        DATE_FORMAT(time,'%Y-%m-%d %H:%i:%s') as ftime
+        from worktext_table order by ftime desc
+    </select>
+
+    <select id="textinfo" resultType="com.lzz.model.worktext">
+        select id,
+        wanchengwork as cwancheng,
+        xietiaowork as dxietiao
+        from worktext_table where id=#{id}
+    </select>
+
+    <delete id="deleteworktext" parameterType="String">
+        delete from worktext_table where id = #{id}
+    </delete>
+
+    <delete id="deleteholiday" parameterType="String">
+        delete from qingjia_table where id = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>请假页面</title>
+    <link type="text/css" rel="stylesheet" href="layui/css/layui.css">
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="layui/layui.js"></script>
+</head>
+<body style="background-color: #F6F6F6">
+<script type="text/javascript">
+    layui.use(['form','layer'], function(){
+        var form = layui.form;
+        var layer=layui.layer;
+        var $=layui.jquery;
+        //监听提交
+        form.on('submit(save)', function(data){
+            var datainfo =$('#holiday').serialize();//获取form表单数据
+            console.log("xxxxxxx"+datainfo);
+            debugger;
+            $.ajax({
+                type:'post',
+                url:'holiday',
+                data: datainfo,
+                success: function (res) {
+                    layer.open({
+                        title: "请假结果",
+                        content: res,
+                        btn: ['确认'],
+                        yes: function (index, layero) {
+                            layer.closeAll();
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
+<span style="font-size: 20px;font-style: normal;color: black;margin-left: 5px;margin-top: 5px">我要请假</span>
+<hr align=center width=100% color=black size="1" style="height: 3px;color: black">
+<form id="holiday" class="layui-form" action="">
+    <div class="layui-form-item">
+        <div class="layui-form-label" style="font-size:17px;width: 100px">工号</div>
+        <label>
+            <input id="anumber" type="text" name="anumber" class="layui-input" autocomplete="off" style="width: 200px;height: 35px;margin-top: 4px" placeholder="请输入工号"/>
+        </label>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-form-label" style="font-size:17px;width: 100px">姓名</div>
+        <label>
+            <input id="bname" type="text" name="bname" class="layui-input" autocomplete="off" style="width: 200px;height: 35px;margin-top: 4px" placeholder="请输入姓名"/>
+        </label>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-form-label" style="font-size:17px;width: 100px">开始时间</div>
+        <label>
+            <input id="cstime" type="text" name="cstime" class="layui-input" placeholder="请选择开始时间"style="width: 200px;height: 35px;margin-top: 4px" />
+        </label>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-form-label" style="font-size:17px;width: 100px">结束时间</div>
+        <label>
+            <input id="detime" type="text" name="detime" class="layui-input" style="width: 200px;height: 35px;margin-top: 4px" placeholder="请选择结束时间"/>
+        </label>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="font-size:17px;width: 100px">请假类型</label>
+        <div class="layui-input-block">
+            <input type="radio" name="etype" value="事假" title="事假">
+            <input type="radio" name="etype" value="病假" title="病假" checked>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label" style="font-size:17px;width: 100px">请假原因</label>
+        <div class="layui-input-block">
+            <textarea id="freason" name="freason" required lay-verify="required" placeholder="请输入内容" class="layui-textarea" style="width: 600px;height: 100px;"></textarea>
+        </div>
+    </div>
+</form>
+<button id="tijiao" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="save" style="width: 300px;height: 35px;margin-left: 130px;margin-top: 5px;">提交</button>
+<script>
+    $(function () {
+        layui.use(['form','laydate'], function(){
+            var laydate = layui.laydate;
+            var form = layui.form;
+            form.render();//单选框  复选框在动态生成的页面不会自动渲染,需要该语句进行渲染
+            laydate.render({
+                elem: '#cstime',
+                type: 'datetime',
+                format: 'yyyy-MM-dd HH:mm:ss'
+            });
+            laydate.render({
+                elem: '#detime',
+                type: 'datetime',
+                format: 'yyyy-MM-dd HH:mm:ss'
+            });
+        });
+    });
+</script>
+</body>
+</html>
